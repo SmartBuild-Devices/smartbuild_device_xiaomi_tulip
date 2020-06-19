@@ -7,6 +7,7 @@ Supported SmartBuild releases:
 - `lineage`
 - `revengeos`
 - `aosp` (AospExtended)
+- `potato`
 
 ## Original README following
 
