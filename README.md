@@ -5,6 +5,7 @@ or similar commands. Then you can proceed as usual.
 
 Supported SmartBuild releases:
 - `lineage`
+- `revengeos`
 
 ## Original README following
 
