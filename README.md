@@ -6,6 +6,7 @@ or similar commands. Then you can proceed as usual.
 Supported SmartBuild releases:
 - `lineage`
 - `revengeos`
+- `aosp` (AospExtended)
 
 ## Original README following
 
