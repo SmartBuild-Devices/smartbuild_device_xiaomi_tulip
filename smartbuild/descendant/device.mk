@@ -1,0 +1,2 @@
+# Face unlock
+TARGET_FACE_UNLOCK_SUPPORT := YES
