@@ -17,6 +17,26 @@
 LOCAL_PATH := $(call my-dir)
 
 ifeq ($(TARGET_DEVICE),tulip)
+  # Include all makefiles NOT in smartbuild/
+  temp_find_leaves_excludes=$(FIND_LEAVES_EXCLUDES)
+  FIND_LEAVES_EXCLUDES := $(addprefix --prune=, smartbuild)
+
   subdir_makefiles=$(call first-makefiles-under,$(LOCAL_PATH))
   $(foreach mk,$(subdir_makefiles),$(info including $(mk) ...)$(eval include $(mk)))
+
+  FIND_LEAVES_EXCLUDES := $(temp_find_leaves_excludes)
+
+  # Traverse SmartBuild inheritance tree to inherit the "active" makefiles
+  $(foreach layer,$(SMARTBUILD_INHERIT_STACK), \
+    $(if $(wildcard $(LOCAL_PATH)/smartbuild/$(layer)/Android.mk), \
+      $(info including $(LOCAL_PATH)/smartbuild/$(layer)/Android.mk ...) \
+      $(eval include $(LOCAL_PATH)/smartbuild/$(layer)/Android.mk) \
+    ,) \
+  )
+
+  # Add the ROM specific Android.mk to the roster
+  $(if $(wildcard $(LOCAL_PATH)/smartbuild/$(SMARTBUILD_RELEASE)/Android.mk), \
+    $(info including $(LOCAL_PATH)/smartbuild/$(SMARTBUILD_RELEASE)/Android.mk ...) \
+    $(eval include $(LOCAL_PATH)/smartbuild/$(SMARTBUILD_RELEASE)/Android.mk) \
+  ,)
 endif

@@ -12,11 +12,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
 
-PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/$(SMARTBUILD_RELEASE)_tulip.mk
+LOCAL_PATH := $(call my-dir)
 
-COMMON_LUNCH_CHOICES := \
-    $(SMARTBUILD_RELEASE)_tulip-user \
-    $(SMARTBUILD_RELEASE)_tulip-userdebug \
-    $(SMARTBUILD_RELEASE)_tulip-eng
+ifeq ($(TARGET_DEVICE),tulip)
+  subdir_makefiles=$(call first-makefiles-under,$(LOCAL_PATH))
+  $(foreach mk,$(subdir_makefiles),$(info including $(mk) ...)$(eval include $(mk)))
+endif

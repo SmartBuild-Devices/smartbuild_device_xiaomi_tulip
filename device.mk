@@ -50,8 +50,7 @@ BOARD_HAVE_QCOM_FM := true
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += \
-    $(DEVICE_PATH)/overlay \
-    $(DEVICE_PATH)/overlay-lineage
+    $(DEVICE_PATH)/overlay
 
 PRODUCT_PACKAGES += \
     NoCutoutOverlay
@@ -72,6 +71,12 @@ PRODUCT_PACKAGES += \
 # Wifi
 PRODUCT_PACKAGES += \
     TulipWifiOverlay
+
+# Inherit from SmartBuild layer stack
+$(foreach layer, $(SMARTBUILD_INHERIT_STACK), \
+    $(call inherit-product-if-exists, $(DEVICE_PATH)/smartbuild/$(layer)/device.mk) \
+)
+$(call inherit-product-if-exists, $(DEVICE_PATH)/smartbuild/$(SMARTBUILD_RELEASE)/device.mk)
 
 # Inherit the proprietary files
 $(call inherit-product, vendor/xiaomi/tulip/tulip-vendor.mk)

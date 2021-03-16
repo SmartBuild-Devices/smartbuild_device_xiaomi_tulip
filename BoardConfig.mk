@@ -52,5 +52,15 @@ TARGET_RECOVERY_FSTAB := $(DEVICE_PATH)/rootdir/etc/fstab.qcom
 # Security patch level
 VENDOR_SECURITY_PATCH := 2018-11-01
 
+# Inherit from SmartBuild layer stack
+$(foreach layer,$(SMARTBUILD_INHERIT_STACK), \
+  $(if $(wildcard $(DEVICE_PATH)/smartbuild/$(layer)/BoardConfig.mk), \
+    $(eval include $(DEVICE_PATH)/smartbuild/$(layer)/BoardConfig.mk) \
+  ,) \
+)
+$(if $(wildcard $(DEVICE_PATH)/smartbuild/$(SMARTBUILD_RELEASE)/BoardConfig.mk), \
+  $(eval include $(DEVICE_PATH)/smartbuild/$(SMARTBUILD_RELEASE)/BoardConfig.mk) \
+,)
+
 # Inherit the proprietary files
 include vendor/xiaomi/tulip/BoardConfigVendor.mk
