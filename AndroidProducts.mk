@@ -13,10 +13,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Include SmartBuild properties for current release.
+include $(LOCAL_DIR)/smartbuild/$(SMARTBUILD_RELEASE)/smartbuild.mk
+
+ifndef SMARTBUILD_LUNCH_OPT
+    SMARTBUILD_LUNCH_OPT := $(SMARTBUILD_RELEASE)
+endif
+
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/$(SMARTBUILD_RELEASE)_tulip.mk
+    $(LOCAL_DIR)/$(SMARTBUILD_LUNCH_OPT)_tulip.mk
 
 COMMON_LUNCH_CHOICES := \
-    $(SMARTBUILD_RELEASE)_tulip-user \
-    $(SMARTBUILD_RELEASE)_tulip-userdebug \
-    $(SMARTBUILD_RELEASE)_tulip-eng
+    $(SMARTBUILD_LUNCH_OPT)_tulip-user \
+    $(SMARTBUILD_LUNCH_OPT)_tulip-userdebug \
+    $(SMARTBUILD_LUNCH_OPT)_tulip-eng
